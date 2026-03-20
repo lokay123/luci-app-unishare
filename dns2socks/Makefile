@@ -1,32 +1,30 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
-# Copyright (C) 2021 ImmortalWrt.org
+# Copyright (C) 2021-2026 ImmortalWrt.org
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dns2socks
-PKG_VERSION:=2.1
-PKG_RELEASE:=4
+PKG_VERSION:=2.2
+PKG_RELEASE:=5
 
-PKG_SOURCE:=SourceCode.zip
-PKG_SOURCE_URL:=@SF/dns2socks
-PKG_SOURCE_DATE:=2020-02-18
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_SOURCE_URL:=https://codeload.github.com/kenzok8/dns2socks/tar.gz/v$(PKG_VERSION)?
 PKG_HASH:=skip
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
-PKG_MAINTAINER:=ghostmaker
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILE:=LICENSE
+PKG_MAINTAINER:=ghostmaker
 
 include $(INCLUDE_DIR)/package.mk
-
-UNZIP_CMD:=unzip -q -d $(PKG_BUILD_DIR) $(DL_DIR)/$(PKG_SOURCE)
 
 define Package/dns2socks
   SECTION:=net
   CATEGORY:=Network
   SUBMENU:=IP Addresses and Names
   TITLE:=DNS to SOCKS or HTTP proxy
-  URL:=http://dns2socks.sourceforge.net/
+  URL:=https://github.com/kenzok8/dns2socks
   DEPENDS:=+libpthread
 endef
 
@@ -40,14 +38,14 @@ define Build/Compile
 	$(TARGET_CFLAGS) \
 	$(TARGET_CPPFLAGS) \
 	$(FPIC) \
-	-o $(PKG_BUILD_DIR)/DNS2SOCKS/dns2socks \
-	$(PKG_BUILD_DIR)/DNS2SOCKS/DNS2SOCKS.c \
+	-o $(PKG_BUILD_DIR)/dns2socks \
+	$(PKG_BUILD_DIR)/src/dns2socks.c \
 	$(TARGET_LDFLAGS) -pthread
 endef
 
 define Package/dns2socks/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/DNS2SOCKS/dns2socks $(1)/usr/bin/dns2socks
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/dns2socks $(1)/usr/bin/dns2socks
 endef
 
 $(eval $(call BuildPackage,dns2socks))
