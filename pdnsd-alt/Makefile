@@ -5,8 +5,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=pdnsd
-PKG_VERSION:=1.3.1
-PKG_RELEASE:=17
+PKG_VERSION:=1.3.2
+PKG_RELEASE:=18
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/kenzok8/pdnsd/tar.gz/$(PKG_VERSION)?
@@ -53,5 +53,4 @@ define Package/pdnsd-alt/install
 endef
 
 $(eval $(call BuildPackage,pdnsd-alt))
-
 
